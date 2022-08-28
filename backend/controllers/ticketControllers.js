@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler")
 
 const User = require("../models/userModel")
 const Ticket = require("../models/ticketModel")
+const { create } = require("../models/userModel")
 
 // @desc    Get user ticket
 // @route   GET /api/tickets
@@ -22,7 +23,27 @@ const getTickets = asyncHandler(async (req, res) => {
 // @route   POST /api/tickets
 // @access  Private
 const createTicket = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "createTicket" })
+  const {product, description} = req.body
+  if(!product || !description) {
+    res.status(400)
+    throw new Error("No products found")
+  }
+
+  //Get user by id and jwt
+  const user = await User.findById(req.user.id)
+  if (!user) {
+    res.status(401)
+    throw new Error("User not found")
+  }
+
+  const ticket = await Ticket.create({
+    product,
+    description,
+    user: req.user.id,
+    status: "New"
+  })
+
+  res.status(200).json(ticket)
 })
 
 module.exports = {
