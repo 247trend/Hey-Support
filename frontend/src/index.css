@@ -229,12 +229,18 @@ h3 {
 .status {
   background-color: #333;
   color: #fff;
-  width: 100px;
-  padding: 0 20px;
+  width: 55px;
+  padding: 0 px;
   justify-self: center;
   border-radius: 10px;
   font-size: 16px;
   text-align: center;
+  margin: 0;
+}
+.status-view {
+  background-color: white;
+  color: black;
+  margin-left: -13px;
 }
 
 .status-new {
