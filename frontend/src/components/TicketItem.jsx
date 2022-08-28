@@ -5,7 +5,7 @@ const TicketItem = ({ ticket }) => {
     <div className="ticket">
       <div>{new Date(ticket.createdAt).toLocaleString()}</div>
       <div>{ticket.product}</div>
-      <div className={`status status-${ticket.status.toLowerCase()}`}>{ticket.status}</div>
+      <div className={`status status-${ticket.status}`}>{ticket.status}</div>
       <Link to={`/ticket/${ticket._id}`} className="status status-view">
         View
       </Link>

@@ -8,7 +8,6 @@ import { toast } from "react-toastify"
 
 const Ticket = () => {
   const { ticket, isLoading, isSuccess, isError, message } = useSelector((state) => state.tickets)
-  const params = useParams()
   const dispatch = useDispatch()
   const { ticketId } = useParams()
 
@@ -35,7 +34,7 @@ const Ticket = () => {
         <BackButton url="/tickets" />
         <h2>
           Ticket ID: {ticket._id}
-          <span className={`status status-${ticket.status.toLowerCase()}`}>{ticket.status}</span>
+          <span className={`status status-${ticket.status}`}>{ticket.status}</span>
         </h2>
         <h3>Data Submitted: {new Date(ticket.createdAt).toLocaleString()}</h3>
         <hr />
