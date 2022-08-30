@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { useParams, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { getTicket, closeTicket } from "../features/tickets/ticketSlice"
-import { getNotes, reset as notesReset } from "../features/notes/noteSlice"
+import { getNotes, createNote, reset as notesReset } from "../features/notes/noteSlice"
 import BackButton from "../components/BackButton"
 import Loader from "../components/Loader"
 import { toast } from "react-toastify"
@@ -53,7 +53,7 @@ const Ticket = () => {
   //Create note and submit
   const onNoteSubmit = (e) => {
     e.preventDefault()
-    console.log("submit")
+    dispatch(createNote({ noteText, ticketId }))
     closeModal()
   }
 
@@ -105,15 +105,26 @@ const Ticket = () => {
         contentLabel="Add Note"
       >
         <h2>Add Note</h2>
-        <button className="btn-close" onClick={closeModal}>X</button>
+        <button className="btn-close" onClick={closeModal}>
+          X
+        </button>
         <form onSubmit={onNoteSubmit}>
           <div className="form-group">
-            <textarea name="noteText" id="noteText" className="form-control" placeholder="Your note" value={noteText} onChange={(e)=>{
-              setNoteText(e.target.value)
-            }}></textarea>
+            <textarea
+              name="noteText"
+              id="noteText"
+              className="form-control"
+              placeholder="Your note"
+              value={noteText}
+              onChange={(e) => {
+                setNoteText(e.target.value)
+              }}
+            ></textarea>
           </div>
           <div className="form-group">
-            <button className="btn" type="submit">Submit</button>
+            <button className="btn" type="submit">
+              Submit
+            </button>
           </div>
         </form>
       </Modal>
