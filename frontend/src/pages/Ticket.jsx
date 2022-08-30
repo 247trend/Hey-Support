@@ -6,6 +6,7 @@ import { getNotes, reset as notesReset } from "../features/notes/noteSlice"
 import BackButton from "../components/BackButton"
 import Loader from "../components/Loader"
 import { toast } from "react-toastify"
+import NoteItem from "../components/NoteItem"
 
 const Ticket = () => {
   const { ticket, isLoading, isSuccess, isError, message } = useSelector((state) => state.tickets)
@@ -30,7 +31,7 @@ const Ticket = () => {
     navigate("/tickets")
   }
 
-  if (isLoading) {
+  if (isLoading || notesIsLoading) {
     return <Loader />
   }
 
@@ -53,7 +54,12 @@ const Ticket = () => {
           <h3>Description of the issue</h3>
           <p>{ticket.description}</p>
         </div>
+        <h2>Notes</h2>
       </header>
+
+      {notes.map((note) => (
+        <NoteItem key={note._id} note={note} />
+      ))}
 
       {ticket.status !== "Closed" && (
         <button onClick={onClose} className="btn btn-block btn-danger">
