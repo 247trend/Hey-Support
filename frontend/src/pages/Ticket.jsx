@@ -1,13 +1,15 @@
 import { useSelector, useDispatch } from "react-redux"
 import { useParams, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
-import { getTicket, reset, closeTicket } from "../features/tickets/ticketSlice"
+import { getTicket, closeTicket } from "../features/tickets/ticketSlice"
+import { getNotes, reset as notesReset } from "../features/notes/noteSlice"
 import BackButton from "../components/BackButton"
 import Loader from "../components/Loader"
 import { toast } from "react-toastify"
 
 const Ticket = () => {
   const { ticket, isLoading, isSuccess, isError, message } = useSelector((state) => state.tickets)
+  const { notes, isLoading: notesIsLoading } = useSelector((state) => state.notes)
   const dispatch = useDispatch()
   const { ticketId } = useParams()
   const navigate = useNavigate()
@@ -18,6 +20,7 @@ const Ticket = () => {
     }
 
     dispatch(getTicket(ticketId))
+    dispatch(getNotes(ticketId))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError, message, ticketId])
 
